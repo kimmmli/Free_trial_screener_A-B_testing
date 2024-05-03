@@ -55,6 +55,16 @@ Baseline dataset:
 According to Central Limit Theorem, when a sample size is large enough, we can assume the sample mean is normally distributed. Knowing normal distribution, we can analytically calculate the three metrics’ variance and standard error.
 
 
+variance = p*(1-p) \
+SE = variance/sqrt(n)
+
+
+|  | Standard Error |
+| --- | --- |
+| Gross conversion | 0.0202 |
+| Retention | 0.0549 |
+| Net conversion | 0.0156 |
+
 ** **Please pay attention to the n in the denominator** **
 
 ** **n for different metric is different, it is the value of the denominator in the metric definition equation****
