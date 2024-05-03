@@ -62,7 +62,7 @@ According to Central Limit Theorem, when a sample size is large enough, we can a
 
 ![截屏2024-05-02 下午12.57.25.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/4273c1fe-f35d-4aa8-9d22-9a4bc68f32c9/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%8812.57.25.png)
 
-**** Please pay attention to the n in the denominator** **
+** **Please pay attention to the n in the denominator** **
 
 ** **n for different metric is different, it is the value of the denominator in the metric definition equation****
 
