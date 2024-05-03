@@ -23,9 +23,7 @@
 
 # 2. Customer Funnel
 
-  
-
-![截屏2024-05-02 下午12.47.26.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/4ab5cd77-c6c8-4f00-a102-27517cad52ab/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%8812.47.26.png)
+Unique Cookie (overview) -> Unique Cookie(click free trial) -> Enrollments -> Payments
 
 # 3. Experiment Design
 
@@ -35,13 +33,9 @@
 
 According to the experiment design, the unit of diversion is a cookie, which means it will be randomly distributed across experiment and comparison group. In addition, both number of clicks and click-through-probability happen before the pop-up schedule checking screener so both of them will be invariant in ideal cases.
 
-![截屏2024-05-02 下午12.52.48.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/3593599b-18d5-45d4-a26d-7ffa39daf528/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%8812.52.48.png)
-
 **Evaluation metrics:** Gross conversion, Retention, Net conversion
 
 All of the three metrics can be affected by the pop-up schedule checking screener so both of them will be variant in ideal cases.
-
-![截屏2024-05-02 下午12.53.08.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/593afdf7-9b58-4ae7-8d0d-8ffc6149e26e/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%8812.53.08.png)
 
 ## 3.2 Measuring Standard deviation/ Variability
 
@@ -60,13 +54,11 @@ Baseline dataset:
 
 According to Central Limit Theorem, when a sample size is large enough, we can assume the sample mean is normally distributed. Knowing normal distribution, we can analytically calculate the three metrics’ variance and standard error.
 
-![截屏2024-05-02 下午12.57.25.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/4273c1fe-f35d-4aa8-9d22-9a4bc68f32c9/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%8812.57.25.png)
 
 ** **Please pay attention to the n in the denominator** **
 
 ** **n for different metric is different, it is the value of the denominator in the metric definition equation****
 
-![截屏2024-05-02 下午12.58.21.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/528025e2-3045-4315-b1d4-588f42e1b8f7/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%8812.58.21.png)
 
 The above approach is using analytical solution, however, empirical way (bootstrap) seems to be more robust. In this case, we are not provided with data to do bootstrap. Normally, we should do both.
 
@@ -84,29 +76,7 @@ I did not adjust significant level based on the fact that we have multiple metri
 
 Using the below page https://www.evanmiller.org/ab-testing/sample-size.html, enter baseline conversion rate, minimum detectable effect, statistical power 1-beta (the probability of correctly rejecting the null hypothesis when it's false; true positive) , significance level alpha (type 1 error; a true null hypothesis is incorrectly rejected; false positive), we can calculate the sample size for one group. 
 
-The website use below formula to calculate(比例类样本计算公式)
-
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/a717073d-518c-487e-8e56-be8ffe84451f/Untitled.png)
-
-上面式子中p1我们称为基础值，是实验关注的关键指标现在的数值（对照组）；p2我们称为目标值，是希望通过实验将其改善至的水平；第一类错误和第二类错误上边已经提到，暂不多做说明，通常设定α为0.05，β为0.2 。
-
-| Metric | Sample Size |
-| --- | --- |
-| Net Conversion | 27,413 |
-| Retention | 39,115 |
-| Gross Conversion | 25,835 |
-
-一般类最小样本计算公式（可用于理解样本数量和各类指标的关系）
-
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/6fb125bb-7631-436e-9701-747f8d23e294/Untitled.png)
-
-![截屏2024-05-02 下午4.49.39.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/626678f1-421a-4f42-b4a7-8744789d69f3/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%884.49.39.png)
-
 We need to double to get the size for both experiment and control group.
-
-Below is the process of calculating the **unique cookies** needed, we need to reverse the way.
-
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/88f583c9-cbeb-4824-92ef-6804917d0d17/4bbe1458-0118-4602-9d4d-dccdfc2a0936.png)
 
 | Metric | Sample Size | Both group sample size | Unique cookie num |
 | --- | --- | --- | --- |
@@ -116,7 +86,6 @@ Below is the process of calculating the **unique cookies** needed, we need to re
 
 ### 3.3.2 Empirical way to calculate sample size
 
-Not sure if it is correct.
 
 ```r
 ## Strategy: For a bunch of Ns, compute the z_star by achieving desired alpha, then## compute what beta would be for that N using the acquired z_star.## Pick the smallest N at which beta crosses the desired value# Inputs:#   The desired alpha for a two-tailed test# Returns: The z-critical valueget_z_star =function(alpha) {
@@ -299,9 +268,6 @@ Experiment data Experiment group:
 | Sat, Nov 15 | 8668 | 724 |  |  |
 | Sun, Nov 16 | 8988 | 710 |  |  |
 
-## 4.0 Standard error calculation
-
-![截屏2024-05-02 下午6.06.49.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/5525e454-66df-4b36-a2ef-98e809ad468f/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%886.06.49.png)
 
 ## 4.1 Sanity check
 
@@ -317,10 +283,6 @@ We can use two ways to approach this question:
 2. **Paired t-test** to compare the difference between two groups and zero.
 
 I used paired t-test below:
-
-![截屏2024-05-02 下午6.21.43.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/55ef6596-a83e-4edc-8065-b968712c7dd9/bc9b8136-2d75-4b9e-959d-6680505ebd28.png)
-
-![截屏2024-05-02 下午6.22.09.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/41444eaa-9958-40c6-869b-f9dbe8dbfa9d/7a4e57fc-e52e-4756-b0c8-a3824a0b95ed/%E6%88%AA%E5%B1%8F2024-05-02_%E4%B8%8B%E5%8D%886.22.09.png)
 
 ```jsx
 
